@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/style.css">
+
+</head>
+<body>
+
+   <div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form id="signupForm">
+					<label for="chk" aria-hidden="true">Registrarse</label>
+					<input type="text" name="txt" id="userNameSignUp" placeholder="Nombre de usuario" required="">
+					<input type="email" name="email" id="" placeholder="Email" required="">
+					<input type="password" name="pswdSignUp" placeholder="Contraseña" required="">
+					<select name="role" id="roles" required="" >
+						<option value="" disabled selected>Elegir rol</option>
+						<option value="user">Usuario</option>
+						<option value="moderator">Moderador</option>
+						<option value="admin">Administrador</option>
+					</select>
+					<button>Registrar</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form id="signinForm">
+					<label for="chk" aria-hidden="true">Iniciar sesión</label>
+					<input type="text" name="txt" id="userName" placeholder="Nombre de usuario" required="">
+					<input type="password" name="pswd" placeholder="Contraseña" required="">
+					<button>Iniciar sesión</button>
+				</form>
+			</div>
+	</div>
+
+	<script src="./scripts/logInSIgnUp.js"></script>
+    
+</body>
+</html>

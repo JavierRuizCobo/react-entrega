@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página admin</title>
+  <link rel="stylesheet" href="styles/adminStyle.css">
+</head>
+<body>
+
+<div class="main">
+  <button id="cerrarSesionBtn">Cerrar Sesión</button>
+
+  <h1>Contenido del Admin</h1>
+  <h2>Muestra todos los usuarios</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre usuario</th>
+        <th>Email</th>
+        <th>Creado</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody id="tablaBody">
+    </tbody>
+  </table>
+
+</div>
+
+<script src="./scripts/admin.js"></script>
+
+</body>
+</html>
