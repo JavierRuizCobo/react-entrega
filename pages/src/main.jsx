@@ -1,11 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import PublicPage from './publicPage.jsx'
-import LogInSignUp from './logInSIgnUp.jsx'
-import AdminPage from './admin.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './app.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <PublicPage></PublicPage>
+    <App />
   </React.StrictMode>,
-)
+);

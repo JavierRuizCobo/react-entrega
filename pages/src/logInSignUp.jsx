@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import './styles/style.css';
+import { useNavigate } from 'react-router-dom';
 
 const LogInSignUp = () => {
+  const navigate = useNavigate();
+
   const [signUpFormData, setSignUpFormData] = useState({
     username: '',
     email: '',
@@ -87,8 +90,11 @@ const LogInSignUp = () => {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
 
-          console.log(response)
-          window.location.href = response.url;
+          const currentURL = new URL(response.url);
+          const path = currentURL.pathname;
+          console.log(path);
+
+          navigate(path);
           return response;
         })
         .catch(error => {

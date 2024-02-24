@@ -83,6 +83,7 @@ exports.moderatorBoard = async (req, res) => {
   }
   
 };
+
 exports.checkRole = async (req, res) => {
   try {
     const user = await User.findById(req.userId)
@@ -100,7 +101,7 @@ exports.checkRole = async (req, res) => {
 
       console.log(filePath);
 
-      res.redirect(filePath);
+      res.status(200).redirect(filePath);
     }
   } catch (err) {
     res.status(500).send({ message: err.message });
