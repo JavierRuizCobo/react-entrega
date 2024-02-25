@@ -1,6 +1,6 @@
 /* style.css */
 
-body {
+/* body {
 	margin: 0;
 	padding: 0;
 	display: flex;
@@ -9,15 +9,15 @@ body {
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
 	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-  }
+  } */
   
-  .main {
+  /* .main {
 	width: 350px;
 	height: 530px;
 	overflow: hidden;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
-  }
+  } */
   
   #chk {
 	display: none;
