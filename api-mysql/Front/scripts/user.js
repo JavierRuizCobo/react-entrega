@@ -1,10 +1,10 @@
 document.getElementById('cerrarSesionBtn').addEventListener('click', function() {
 
     localStorage.removeItem('access_token');
-    history.replaceState(null, null, '/');
 
     window.location.href = '/';
 });
+
 
 function llenarTabla(data) {
 
@@ -29,7 +29,7 @@ function llenarTabla(data) {
 
 function obtenerJsonServer(){
     const accessToken = localStorage.getItem('access_token')
-    fetch("/api/test/moderator", {
+    fetch("/api/test/user", {
         method: "GET",
         headers: {
             "x-access-token": `${accessToken}`
@@ -49,4 +49,5 @@ function obtenerJsonServer(){
 
     });
   }
+
   document.addEventListener('DOMContentLoaded', obtenerJsonServer);

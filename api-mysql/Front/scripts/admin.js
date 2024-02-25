@@ -1,7 +1,6 @@
 document.getElementById('cerrarSesionBtn').addEventListener('click', function() {
 
     localStorage.removeItem('access_token');
-    history.replaceState(null, null, '/');
 
     window.location.href = '/';
 });

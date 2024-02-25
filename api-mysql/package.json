@@ -1,5 +1,5 @@
 {
-  "name": "parcialmongo",
+  "name": "js-jwt-auth",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,8 +13,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "mysql2": "^3.6.2",
+    "sequelize": "^6.33.0"
   }
 }
