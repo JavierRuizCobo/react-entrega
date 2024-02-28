@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './styles/style.css';
+import './styles/style.css'; // Assuming the CSS file exists
 import { useNavigate } from 'react-router-dom';
 
 const LogInSignUp = () => {
@@ -17,75 +17,81 @@ const LogInSignUp = () => {
     password: '',
   });
 
-  const handleSignUpChange = (e) => {
+  const handleSignUpChange = (event) => {
     setSignUpFormData({
       ...signUpFormData,
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
-  const handleRolesChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map((option) => option.value);
+  const handleRolesChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions).map(
+      (option) => option.value
+    );
     setSignUpFormData({
       ...signUpFormData,
       roles: selectedOptions,
     });
   };
 
-  const handleSignInChange = (e) => {
+  const handleSignInChange = (event) => {
     setSignInFormData({
       ...signInFormData,
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
-  const handleSignUpSubmit = (e) => {
-    e.preventDefault();
+  const handleSignUpSubmit = async (event) => {
+    event.preventDefault();
 
-    fetch("http://localhost:8080/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(signUpFormData),
-    })
-    .then(response => response.json())
-    .then(data => {
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signUpFormData),
+      });
+
+      const data = await response.json();
+
       console.log(data);
       window.alert(data.message);
-      document.getElementById("signupForm").reset();
-    })
-    .catch(error => {
+      document.getElementById('signupForm').reset();
+    } catch (error) {
       console.error(error);
-    });
+    }
   };
 
-  const handleSignInSubmit = (e) => {
-    e.preventDefault();
+  const handleSignInSubmit = async (event) => {
+    event.preventDefault();
 
-    fetch("http://localhost:8080/api/auth/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(signInFormData),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Respuesta del servidor:", data);
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signInFormData),
+      });
+
+      const data = await response.json();
+
+      console.log('Respuesta del servidor:', data);
 
       if (data.accessToken) {
         localStorage.setItem('access_token', data.accessToken);
 
         const accessToken = localStorage.getItem('access_token');
 
-        fetch("http://localhost:8080/api/auth/userfile", {
-          method: "GET",
-          headers: {
-            "x-access-token": `${accessToken}`
-          }
-        })
-        .then(response => {
+        try {
+          const response = await fetch('http://localhost:8080/api/auth/userfile', {
+            method: 'GET',
+            headers: {
+              'x-access-token': `${accessToken}`,
+            },
+          });
+
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
@@ -95,33 +101,51 @@ const LogInSignUp = () => {
           console.log(path);
 
           navigate(path);
-          return response;
-        })
-        .catch(error => {
-          console.error("Error al obtener el contenido del archivo:", error);
-        });
+        } catch (error) {
+          console.error('Error al obtener el contenido del archivo:', error);
+        }
       } else {
         window.alert(data.message);
       }
 
-      document.getElementById("signinForm").reset();
-    })
-    .catch(error => {
+      document.getElementById('signinForm').reset();
+    } catch (error) {
       console.error(error);
-    });
+    }
   };
 
   return (
     <div className="main">
       <input type="checkbox" id="chk" aria-hidden="true" />
-
+  
       <div className="signup">
         <form id="signupForm" onSubmit={handleSignUpSubmit}>
-          <label htmlFor="chk" aria-hidden="true">Registrarse</label>
-          <input type="text" name="username" id="userNameSignUp" placeholder="Nombre de usuario" required="" onChange={handleSignUpChange} />
-          <input type="email" name="email" placeholder="Email" required="" onChange={handleSignUpChange} />
-          <input type="password" name="password" placeholder="Contraseña" required="" onChange={handleSignUpChange} />
-          <select name="roles" id="roles" required="" onChange={handleRolesChange}>
+          <label htmlFor="chk" aria-hidden="true">
+            Registrarse
+          </label>
+          <input
+            type="text"
+            name="username"
+            id="userNameSignUp"
+            placeholder="Nombre de usuario"
+            required
+            onChange={handleSignUpChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            onChange={handleSignUpChange}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            required
+            onChange={handleSignUpChange}
+          />
+          <select name="roles" id="roles" required onChange={handleRolesChange}>
             <option value="" disabled selected>Elegir rol</option>
             <option value="user">Usuario</option>
             <option value="moderator">Moderador</option>
@@ -130,17 +154,32 @@ const LogInSignUp = () => {
           <button type="submit">Registrar</button>
         </form>
       </div>
-
+  
       <div className="login">
         <form id="signinForm" onSubmit={handleSignInSubmit}>
-          <label htmlFor="chk" aria-hidden="true">Iniciar sesión</label>
-          <input type="text" name="username" id="userName" placeholder="Nombre de usuario" required="" onChange={handleSignInChange} />
-          <input type="password" name="password" placeholder="Contraseña" required="" onChange={handleSignInChange} />
+          <label htmlFor="chk" aria-hidden="true">
+            Iniciar sesión
+          </label>
+          <input
+            type="text"
+            name="username"
+            id="userName"
+            placeholder="Nombre de usuario"
+            required
+            onChange={handleSignInChange}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            required
+            onChange={handleSignInChange}
+          />
           <button type="submit">Iniciar sesión</button>
         </form>
       </div>
     </div>
   );
-};
+  }  
 
-export default LogInSignUp;
+  export default LogInSignUp;
