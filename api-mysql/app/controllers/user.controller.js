@@ -115,7 +115,7 @@ exports.checkRole = (req, res) => {
         user.getRoles().then(roles => {
           const filePath = getRouteBasedOnRole(roles);
           
-          res.redirect(filePath);
+          res.status(200).json({"rol": filePath});
         });
       }
       

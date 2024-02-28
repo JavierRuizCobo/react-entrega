@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './styles/style.css'; // Assuming the CSS file exists
+import './styles/style.css';
 import { useNavigate } from 'react-router-dom';
 
 const LogInSignUp = () => {
@@ -95,12 +95,9 @@ const LogInSignUp = () => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
+          
 
-          const currentURL = new URL(response.url);
-          const path = currentURL.pathname;
-          console.log(path);
-
-          navigate(path);
+          navigate(data.rol);
         } catch (error) {
           console.error('Error al obtener el contenido del archivo:', error);
         }
