@@ -95,6 +95,8 @@ const LogInSignUp = () => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
+
+          const data = await response.json();
           
           console.log(data.rol)
           navigate(data.rol);
