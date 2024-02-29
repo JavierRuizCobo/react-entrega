@@ -96,8 +96,9 @@ const LogInSignUp = () => {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           
-
+          console.log(data.rol)
           navigate(data.rol);
+
         } catch (error) {
           console.error('Error al obtener el contenido del archivo:', error);
         }
