@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './styles/style.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LogInSignUp = () => {
   const navigate = useNavigate();
@@ -45,72 +46,54 @@ const LogInSignUp = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(signUpFormData),
-      });
+      const response = await axios.post('http://localhost:8080/api/auth/signup', signUpFormData);
 
-      const data = await response.json();
-
-      console.log(data);
-      window.alert(data.message);
+      console.log(response.data);
+      window.alert(response.data.message);
       document.getElementById('signupForm').reset();
+
     } catch (error) {
       console.error(error);
+      window.alert(error.response.data.message);
+      document.getElementById('signupForm').reset();
     }
   };
+
 
   const handleSignInSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(signInFormData),
-      });
+      const response = await axios.post('http://localhost:8080/api/auth/signin', signInFormData);
 
-      const data = await response.json();
+      console.log('Respuesta del servidor:', response.data);
 
-      console.log('Respuesta del servidor:', data);
-
-      if (data.accessToken) {
-        localStorage.setItem('access_token', data.accessToken);
+      if (response.data.accessToken) {
+        localStorage.setItem('access_token', response.data.accessToken);
 
         const accessToken = localStorage.getItem('access_token');
 
         try {
-          const response = await fetch('http://localhost:8080/api/auth/userfile', {
-            method: 'GET',
+          const userFileResponse = await axios.get('http://localhost:8080/api/auth/userfile', {
             headers: {
-              'x-access-token': `${accessToken}`,
+              'x-access-token': accessToken,
             },
           });
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-
-          const data = await response.json();
-          
-          console.log(data.rol)
+          const data = userFileResponse.data;
+          console.log(data.rol);
           navigate(data.rol);
-
         } catch (error) {
           console.error('Error al obtener el contenido del archivo:', error);
         }
       } else {
-        window.alert(data.message);
+        window.alert(response.data.message);
       }
 
       document.getElementById('signinForm').reset();
     } catch (error) {
       console.error(error);
+      window.alert(error.response.data.message);
     }
   };
 

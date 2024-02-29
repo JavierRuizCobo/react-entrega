@@ -1,39 +1,43 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styles/userStyle.css';
+import axios from 'axios';
 
 const UserPage = () => {
   const [userData, setUserData] = useState([]);
+  const navigate = useNavigate();
+
 
   const cerrarSesionHandler = () => {
     localStorage.removeItem('access_token');
     window.history.replaceState(null, null, '/');
-    window.location.href = '/';
+    navigate('/')
   };
 
   useEffect(() => {
     const obtenerJsonServer = async () => {
       try {
         const accessToken = localStorage.getItem('access_token');
-        const response = await fetch("http://localhost:8080/api/test/user", {
-          method: "GET",
+        const response = await axios.get("http://localhost:8080/api/test/user", {
           headers: {
             "x-access-token": accessToken
           }
         });
-        const data = await response.json();
+        const data = response.data;
         console.log("Respuesta del servidor para la ruta de usuario:", data);
         if (data) {
           setUserData(data);
         }
       } catch (error) {
         console.error("Error al realizar la solicitud GET:", error);
-        window.location.href = '/';
+        window.alert(error.response.data.message);
+        navigate('/');
         localStorage.removeItem('access_token');
       }
     };
 
     obtenerJsonServer();
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="main">
