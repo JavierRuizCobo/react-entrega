@@ -18,6 +18,9 @@ const LogInSignUp = () => {
     password: '',
   });
 
+  const [signUpError, setsignUpError] = useState(null);
+  const [logInError, logInSetError] = useState(null);
+
   const handleSignUpChange = (event) => {
     setSignUpFormData({
       ...signUpFormData,
@@ -54,7 +57,7 @@ const LogInSignUp = () => {
 
     } catch (error) {
       console.error(error);
-      window.alert(error.response.data.message);
+      setsignUpError(error.response.data.message)
       document.getElementById('signupForm').reset();
     }
   };
@@ -81,7 +84,6 @@ const LogInSignUp = () => {
           });
 
           const data = userFileResponse.data;
-          console.log(data.rol);
           navigate(data.rol);
         } catch (error) {
           console.error('Error al obtener el contenido del archivo:', error);
@@ -92,8 +94,8 @@ const LogInSignUp = () => {
 
       document.getElementById('signinForm').reset();
     } catch (error) {
-      console.error(error);
-      window.alert(error.response.data.message);
+      console.error(error.response.data.message);
+      logInSetError(error.response.data.message);
     }
   };
 
@@ -128,14 +130,18 @@ const LogInSignUp = () => {
             required
             onChange={handleSignUpChange}
           />
-          <select name="roles" id="roles" required onChange={handleRolesChange}>
-            <option value="" disabled selected>Elegir rol</option>
+          <select name="roles" id="roles" required onChange={handleRolesChange} defaultValue="">
+            <option value="" disabled>Elegir rol</option>
             <option value="user">Usuario</option>
             <option value="moderator">Moderador</option>
             <option value="admin">Administrador</option>
           </select>
+
           <button type="submit">Registrar</button>
         </form>
+        <p className="Error">
+              {signUpError}
+            </p>
       </div>
   
       <div className="login">
@@ -160,6 +166,9 @@ const LogInSignUp = () => {
           />
           <button type="submit">Iniciar sesión</button>
         </form>
+        <p className="Error">
+              {logInError}
+            </p>
       </div>
     </div>
   );

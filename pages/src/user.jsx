@@ -24,14 +24,13 @@ const UserPage = () => {
           }
         });
         const data = response.data;
-        console.log("Respuesta del servidor para la ruta de usuario:", data);
+        console.log("Respuesta del servidor:", data);
         if (data) {
           setUserData(data);
         }
       } catch (error) {
         console.error("Error al realizar la solicitud GET:", error);
-        window.alert(error.response.data.message);
-        navigate('/');
+        navigate('/error', { state: { errorMessage: error.response.data.message } });
         localStorage.removeItem('access_token');
       }
     };

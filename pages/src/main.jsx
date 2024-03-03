@@ -6,12 +6,14 @@ import LogInSignUp from './logInSignUp';
 import AdminPage from './admin';
 import ModeratorPage from './moderator';
 import UserPage from './user';
+import ErrorPage from './errorPage';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
+        <Route path="/error" element={<ErrorPage />} />
         <Route path="/logInSignUp" element={<LogInSignUp/>} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/moderator" element={<ModeratorPage />} />

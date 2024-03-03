@@ -111,4 +111,10 @@ body {
   #chk:checked ~ .signup label {
 	transform: scale(0.6);
   }
+
+  .Error {
+	color: red;
+	text-align: center;
+	margin-top: 10px; 
+  }
   
