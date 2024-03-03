@@ -7,9 +7,9 @@ const ErrorPage = () => {
   const errorMessage = location.state ? location.state.errorMessage : 'Error desconocido';
 
   return (
-    <div>
+    <div className="ErrorPage">
       <h2>Error</h2>
-      <p>{errorMessage}</p>
+      <p className="ErrorMessage">{errorMessage}</p>
     </div>
   );
 };

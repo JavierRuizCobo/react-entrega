@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styles/publicStyle.css';
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   const redirectToLoginPage = () => {
-    window.location.href = "/logInSignUp";
+    navigate("/logInSignUp")
   };
 
   const llenarTabla = (data) => {

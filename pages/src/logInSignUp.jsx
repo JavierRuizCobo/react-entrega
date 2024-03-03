@@ -92,10 +92,10 @@ const LogInSignUp = () => {
         window.alert(response.data.message);
       }
 
-      document.getElementById('signinForm').reset();
     } catch (error) {
       console.error(error.response.data.message);
       logInSetError(error.response.data.message);
+      document.getElementById('signinForm').reset();
     }
   };
 
