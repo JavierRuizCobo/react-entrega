@@ -1,18 +1,16 @@
-/* Estilos para ErrorPage.css */
 
 .ErrorPage {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Ajusta la altura según sea necesario */
+    height: 100vh;
   }
   
   .ErrorMessage {
     color: red;
     font-size: 1.5em;
-    margin-top: 20px; /* Ajusta el margen superior según sea necesario */
-    /* Otras propiedades de estilo según tus necesidades */
+    margin-top: 20px; 
   }
   
   

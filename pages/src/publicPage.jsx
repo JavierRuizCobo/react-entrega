@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/publicStyle.css';
+import axios from 'axios';
 
 const PublicPage = () => {
   const [data, setData] = useState([]);
@@ -20,26 +21,26 @@ const PublicPage = () => {
     return tablaBody;
   };
 
-  const obtenerJsonServer = () => {
-    localStorage.removeItem('access_token');
-
-    fetch("http://localhost:8080/api/test/all", {
-      method: "GET",
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Respuesta del servidor para la ruta de usuario:", data);
-        if (data) {
-          setData(data);
-        }
-      })
-      .catch(error => {
-        console.error("Error al realizar la solicitud GET:", error);
-      });
-  };
-
   useEffect(() => {
-    obtenerJsonServer();
+    
+    const obtenerContenidoPublico = async () => {
+
+      try {
+        localStorage.removeItem('access_token');
+        const response = await axios.get("http://localhost:8080/api/test/all");
+
+        const data = response.data;
+        if(data) {
+          setData(data)
+        }
+        
+      } catch (error) {
+        console.error("Error al realizar la solicitud GET:", error);
+      }
+
+    };
+
+    obtenerContenidoPublico();
   }, []);
 
   return (

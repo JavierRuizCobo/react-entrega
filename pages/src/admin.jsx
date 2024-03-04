@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 const AdminPage = () => {
-  const [userData, setUserData] = useState([]);
+  const [adminData, setAdminData] = useState([]);
   const navigate = useNavigate();
 
   const cerrarSesionHandler = () => {
@@ -15,7 +15,7 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
-    const obtenerJsonServer = async () => {
+    const obtenerContenidoAdmin = async () => {
       try {
         const accessToken = localStorage.getItem('access_token');
         const response = await axios.get("http://localhost:8080/api/test/admin", {
@@ -24,9 +24,8 @@ const AdminPage = () => {
           }
         });
         const data = response.data;
-        console.log("Respuesta del servidor admin:", data);
         if (data) {
-          setUserData(data);
+          setAdminData(data);
         }
       } catch (error) {
         console.error("Error al realizar la solicitud GET:", error);
@@ -34,8 +33,7 @@ const AdminPage = () => {
         localStorage.removeItem('access_token');
       }
     };
-
-    obtenerJsonServer();
+    obtenerContenidoAdmin();
   }, [navigate]);
 
   return (
@@ -55,7 +53,7 @@ const AdminPage = () => {
           </tr>
         </thead>
         <tbody>
-          {userData.map((user) => (
+          {adminData.map((user) => (
             <tr key={user.username}>
               <td>{user.username}</td>
               <td>{user.email}</td>

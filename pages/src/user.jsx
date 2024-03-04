@@ -15,7 +15,7 @@ const UserPage = () => {
   };
 
   useEffect(() => {
-    const obtenerJsonServer = async () => {
+    const obtenerContenidoUser = async () => {
       try {
         const accessToken = localStorage.getItem('access_token');
         const response = await axios.get("http://localhost:8080/api/test/user", {
@@ -24,7 +24,6 @@ const UserPage = () => {
           }
         });
         const data = response.data;
-        console.log("Respuesta del servidor:", data);
         if (data) {
           setUserData(data);
         }
@@ -35,7 +34,7 @@ const UserPage = () => {
       }
     };
 
-    obtenerJsonServer();
+    obtenerContenidoUser();
   }, [navigate]);
 
   return (

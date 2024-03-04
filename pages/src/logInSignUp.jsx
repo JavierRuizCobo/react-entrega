@@ -18,7 +18,7 @@ const LogInSignUp = () => {
     password: '',
   });
 
-  const [signUpError, setsignUpError] = useState(null);
+  const [responseSignUp, setsignUpResponse] = useState(null);
   const [logInError, logInSetError] = useState(null);
 
   const handleSignUpChange = (event) => {
@@ -52,14 +52,19 @@ const LogInSignUp = () => {
       const response = await axios.post('http://localhost:8080/api/auth/signup', signUpFormData);
 
       console.log(response.data);
-      window.alert(response.data.message);
-      document.getElementById('signupForm').reset();
+      setsignUpResponse(response.data.message);
 
     } catch (error) {
       console.error(error);
-      setsignUpError(error.response.data.message)
-      document.getElementById('signupForm').reset();
+      setsignUpResponse(error.response.data.message)
     }
+
+    setSignUpFormData({
+      username: '',
+      email: '',
+      password: '',
+      roles: [],
+    });
   };
 
 
@@ -88,14 +93,15 @@ const LogInSignUp = () => {
         } catch (error) {
           console.error('Error al obtener el contenido del archivo:', error);
         }
-      } else {
-        window.alert(response.data.message);
       }
 
     } catch (error) {
       console.error(error.response.data.message);
       logInSetError(error.response.data.message);
-      document.getElementById('signinForm').reset();
+      setSignInFormData({
+        username: '',
+        password: '',
+      });
     }
   };
 
@@ -114,6 +120,7 @@ const LogInSignUp = () => {
             id="userNameSignUp"
             placeholder="Nombre de usuario"
             required
+            value={signUpFormData.username}
             onChange={handleSignUpChange}
           />
           <input
@@ -121,6 +128,7 @@ const LogInSignUp = () => {
             name="email"
             placeholder="Email"
             required
+            value={signUpFormData.email}
             onChange={handleSignUpChange}
           />
           <input
@@ -128,6 +136,7 @@ const LogInSignUp = () => {
             name="password"
             placeholder="Contraseña"
             required
+            value={signUpFormData.password}
             onChange={handleSignUpChange}
           />
           <select name="roles" id="roles" required onChange={handleRolesChange} defaultValue="">
@@ -139,9 +148,7 @@ const LogInSignUp = () => {
 
           <button type="submit">Registrar</button>
         </form>
-        <p className="Error">
-              {signUpError}
-            </p>
+        <p className="Error"> {responseSignUp} </p>
       </div>
   
       <div className="login">
@@ -155,6 +162,7 @@ const LogInSignUp = () => {
             id="userName"
             placeholder="Nombre de usuario"
             required
+            value={signInFormData.username}
             onChange={handleSignInChange}
           />
           <input
@@ -162,13 +170,12 @@ const LogInSignUp = () => {
             name="password"
             placeholder="Contraseña"
             required
+            value={signInFormData.password}
             onChange={handleSignInChange}
           />
           <button type="submit">Iniciar sesión</button>
         </form>
-        <p className="Error">
-              {logInError}
-            </p>
+        <p className="Error"> {logInError} </p>
       </div>
     </div>
   );

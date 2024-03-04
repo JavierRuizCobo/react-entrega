@@ -4,7 +4,7 @@ import './styles/moderatorStyle.css';
 import axios from 'axios';
 
 const ModeratorPage = () => {
-  const [userData, setUserData] = useState([]);
+  const [moderatorData, setModeratorData] = useState([]);
   const navigate = useNavigate();
 
 
@@ -15,10 +15,10 @@ const ModeratorPage = () => {
   };
 
   useEffect(() => {
-    const obtenerJsonServer = async () => {
+    const obtenerContenidoModerator = async () => {
       try {
         const accessToken = localStorage.getItem('access_token');
-        const response = await axios.get("http://localhost:8080/api/test/admin", {
+        const response = await axios.get("http://localhost:8080/api/test/moderator", {
           headers: {
             "x-access-token": accessToken
           }
@@ -26,7 +26,7 @@ const ModeratorPage = () => {
         const data = response.data;
         console.log("Respuesta del servidor:", data);
         if (data) {
-          setUserData(data);
+          setModeratorData(data);
         }
       } catch (error) {
         console.error("Error al realizar la solicitud GET:", error);
@@ -35,7 +35,7 @@ const ModeratorPage = () => {
       }
     };
 
-    obtenerJsonServer();
+    obtenerContenidoModerator();
   }, [navigate]);
 
   return (
@@ -54,7 +54,7 @@ const ModeratorPage = () => {
           </tr>
         </thead>
         <tbody>
-          {userData.map((user) => (
+          {moderatorData.map((user) => (
             <tr key={user.username}>
               <td>{user.username}</td>
               <td>{user.email}</td>
