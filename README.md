@@ -1,64 +1,66 @@
-Entrega 1:
+Gestión del estado
 
-    -Realizar la parte de front con HTML5 para registrarse.
+    Componente publicPage:
 
-    -Realizar la parte de front con HTML5 para hacer login en la aplicación.
+        En este componente inicilizo un estado con un array vacío que se llenará con los datos 
+        que obtenga del servidor. 
 
-    -Realizar la parte de front con HTML5 para mostrar datos de la base de datos, 
-    según se haya realizado login con alguno de los reoles, o mostrar datos de la 
-    base de datos de acceso público si no se ha realizado login.
+        Utilizo el hook UseEffect para hacer la solicitud al servidor cuando el componente se 
+        renderiza, si la solicitud es exitosa actualizo el estado con los datos que he recibido.
 
-    Para esta entrega he creado un archivo html que tiene dos formularios,
-    uno para iniciar sesión y otro para registrarse. Este archivo tiene su hoja 
-    de estilos referenciada para dar estilo a los formularios y a la página html.
-    Este archivo html tambien tiene un script referenciado que sirve para recopilar
-    los datos del formulario, comunicarse con el backend para hacer una solictud POST
-    y recibir la respuesta de si se ha registrado/iniciado sesión o no.
+        Los datos que tengo en el estado los utilizo para enseñarlos en una tabla.
 
-    Para mostrar una página dependiendo del rol que tenga el usuario que inicia sesión
-    he hecho lo siguiente:
+    Componente logInSignUp:
 
-    Cuando hago login, primero verifico si el usuario puede iniciar sesión, si lo hace 
-    correctamente llamo a una ruta que he tenido que crear en el back que se llama 
-    userFile, esta ruta llama a un controlador que lo que hace es comprobar que rol 
-    tiene el usuario que ha iniciado sesión y devolver el archivo html que le corresponde
-    a ese rol.
+        En la parte de registrarse inicializo un estado con los datos que necesito para crear un 
+        usuario, tambien creo un estado para manejar la respuesta que reciba del servidor que se 
+        mostrará en el componente. Utilizo un evento de cambio para actualizar el estado según los 
+        cambios en los campos de los formularios. Cuando pulso el botón de registrar este hace una 
+        petición para crear un usuario con los datos del estado. Si la petición da error actualizo 
+        el estado de respuesta para mostrarlo por pantalla. Después de realizar la petición reseteo 
+        los datos del estado que se necesita para registrarse. 
 
-    He creado tres archivos html con su hoja de estilos y script referenciados, cada uno 
-    nombrado con los tres roles que hay. El html muestra una tabla con el contenido 
-    que le corresponde al rol y que obtengo del backend a través de las rutas y los 
-    controladores.
+        En la parte de iniciar sesión inicializo un estado con los datos que necesito para iniciar 
+        sesión, tambien creo un estado para mostrar los errores que va a devolver si se ha hecho 
+        incorrecto. Uso un evento de cambio para actualizar el estado según los cambios en los campos 
+        de los formularios. Al pulsar el botón de iniciar sesión se hace una petición al servidor con 
+        los datos del estado, si esta es fallida se actualiza el estado de error de inicio de sesión 
+        para que se muestre en la pantalla. Después de realizar la petición reseteo el estado de los 
+        datos del formulario de inicio de sesión.
 
-    Cada script establece comunicación con el backend utilizando la ruta asociada al 
-    rol del usuario. Si el usuario posee un rol diferente, el contenido correspondiente
-    a ese rol no será visible para él.
+    Componentes admin, moderator y user:
 
+        En estos componentes inicializo el estado con la función que lo actualiza, lo inicializo con 
+        un array vacío debido que a lo que van a recibir es un array de JSON.
 
-Entrega 2:
+        En estos componentes uso el hook UseEffect para hacer la solicitud al servidor al renderizar 
+        el componente, si la solicitud es exitosa actualizo el estado local que contiene los datos 
+        que va a mostrar.
 
-    Lo primero que he hecho es un nuevo proyecto, he copiado del anterior 
-    proyecto los archivos en los que no utilizaba MySQL y la parte del front.
+        Los datos que tengo en el estado los enseño en una tabla.
+    
 
-    A partir de ahi, lo que he hecho es instalar el paquete de mongoose con 
-    npm. El primer archivo que he cambiado es db.config para poder utilizarlo 
-    luego para conectarme a mongo. 
+Gestión de rutas
 
-    De la carpeta models he tenido que cambiar todos los archivos ya que en el otro 
-    proyecto creaba a través de Sequelize las tablas y las relaciones específicamente 
-    para MySql. Por lo que he creado los modelos con mongoose paa poder utilizarlo 
-    en mongodb.
+    El proyecto tiene 6 rutas:
 
-    He realizado la conexión con mongodb en el archivo server.js, para realizarla 
-    he utilizado las configuraciones que había definido antes en db.config. 
+        -/ -> Esta ruta renderiza el componente que recibe el contenido publico de la api. A través 
+        de esta ruta puedes acceder a la ruta de /logInSignUp. 
 
-    Después de crear los modelos para mongodb y verificar que puedo establecer la 
-    conexión, he tenido que cambiar en los archivos de las carpetas controllers 
-    y middleware la manera en que guardo los usuarios o hago las consultas para poder 
-    iniciar sesión o registrarse.
+        -logInSignUp -> En esta ruta se encuentra el componente para registrar usuarios e iniciar sesión. 
+        Al iniciar sesión este te redirige dependiendo del rol que tengas a la ruta que le corresponde.
 
+        -/admin -> Aquí esta el componente que muestra la información que solo se puede ver el admin, 
+        si se intenta acceder y no tienes los permisos o no tienes token te dirigira a la ruta /error.
+
+        -/moderator -> Aquí esta el componente que muestra la información que puede ver el moderator, 
+        al igual que con el admin si no se tiene permiso o token te dirige a /error.
+
+        -/user -> Esta ruta contiene el componente que muestra la información que ven los user, si no 
+        tienes token te dirige a /error.
+
+        -/error -> Esta ruta renderiza un componente que muestra el error que ha recibido con useLocation
+        a través de location.state. Si no existe muestro "Error desconocido".
+
+    Para manejarme entre rutas utlizo el hook useNavigate de react-router-dom.
         
-
-
-
-
-
